@@ -131,7 +131,7 @@ void Graf::sortaret()
     }
 }
 
-void Graf::dfsctc(int nod, int viz[], int ok)
+void Graf::dfsctc(int nod, int viz[], int ok) //afisam dfs incepand din nod
 {
     viz[nod] = 1;
     if (ok == 1)
@@ -148,16 +148,16 @@ Graf Graf::trans()
 {
     int i;
     Graf g(true);
-    for (i = 1; i <= n; i++)
+    for (i = 1; i <= n; i++) //parcurgem nodurile
     {
         vector<int>::iterator j;
-        for (j = v[i].begin(); j != v[i].end(); j++)
-            g.v[*j].push_back(i);
+        for (j = v[i].begin(); j != v[i].end(); j++) //parcurgem vecinii fiecarui nod
+            g.v[*j].push_back(i);                    //in transpusa punem arcul inversat
     }
     return g;
 }
 
-void Graf::ordine(int nod, int viz[], stack<int> &s)
+void Graf::ordine(int nod, int viz[], stack<int> &s)//punem in stack nodurile dupa timpul de finalizare
 {
     viz[nod] = 1;
     for (int i = 0; i < v[nod].size(); i++)
@@ -174,12 +174,12 @@ void Graf::ctc()
     int viz[n + 1] = {0};
     for (i = 1; i <= n; i++)
         if (viz[i] == 0)
-            ordine(i, viz, s);
+            ordine(i, viz, s);//cream stackul cu timpurile de finalizare
     Graf gr = trans();
     for (i = 1; i <= n; i++)
-        viz[i] = 0;
+        viz[i] = 0;//reinitializam ca nevizitate pt al doilea dfs
     s2 = s;
-    while (!s.empty())
+    while (!s.empty())//mai intai doar le numaram
     {
         int nod = s.top();
         s.pop();
@@ -193,7 +193,7 @@ void Graf::ctc()
     out << k << endl;
     for (i = 1; i <= n; i++)
         viz[i] = 0;
-    while (!s2.empty())
+    while (!s2.empty())//parcirgem iar si afisam componentele
     {
         int nod = s2.top();
         s2.pop();
